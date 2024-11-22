@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import conectarAoBanco from "../config/dbConfig.js";
 
 // Conecta ao banco de dados usando as informações da variável de ambiente STRING_CONEXAO
@@ -65,3 +66,8 @@ export async function criarPost(novoPost) {
     return colecao.insertOne(novoPost);
 }
 
+export async function atualizarPost(id, novoPost) {
+    const colecao = conectarBanco();
+    const objId = ObjectId.createFromHexString(id);
+    return colecao.updateOne({_id: new ObjectId(objId)}, {$set: novoPost});
+}
