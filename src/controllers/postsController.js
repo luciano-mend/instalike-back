@@ -55,11 +55,11 @@ export async function atualizarNovoPost(req, res) {
     try {
         const imageBuffer = fs.readFileSync(`uploads/${id}.jpg`);
         const descricao = await gerarDescricaoComGemini(imageBuffer);
-        //const altText = await gerarDescricaoComGemini(imageBuffer, "alt");
+        const altText = await gerarDescricaoComGemini(imageBuffer, "alt");
         const post = {
             descricao: descricao,
             imgUrl: urlImagem,
-            alt: req.params.alt
+            alt: altText
         }
         const postCriado = await atualizarPost(id, post);
         res.status(201).json(postCriado);
